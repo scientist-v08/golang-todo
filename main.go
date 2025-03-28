@@ -20,7 +20,7 @@ func main() {
 
 	// CORS configuration
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:4200"},
+		AllowOrigins: []string{"http://localhost:4200", "http://localhost:4201"},
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Content-Type", "Authorization"},
 		ExposeHeaders: []string{"Content-Length"},
@@ -38,5 +38,7 @@ func main() {
 	r.POST("/person", middleware.RequireAnyRole("ROLE_USER"), controllers.PostPeople)
 	r.GET("/get/people", middleware.RequireAnyRole("ROLE_USER"), controllers.GetAllPeople)
 	r.GET("/get/people/paginated", middleware.RequireAnyRole("ROLE_USER"), controllers.GetPeoplePaginated)
+	r.POST("/products/create", controllers.AddProduct)
+	r.GET("/products", controllers.GetAllProducts)
 	r.Run()
 }
